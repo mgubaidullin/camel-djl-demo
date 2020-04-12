@@ -82,7 +82,7 @@ While Camel 3.3 is not released yet, install it locally outside of this demo pro
 ```  
 
 ### Expected response
-```
+```json
     HTTP/1.1 200 OK
     Accept: */*
     Connection: keep-alive
