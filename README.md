@@ -4,7 +4,7 @@ This project demonstrates simple HTTP-service to classify images using Zoo Model
 
 With the aid of Apache Camel it could be implemented in a few lines of code:
 
-```
+```java
 import org.apache.camel.attachment.AttachmentMessage;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.apache.camel.main.Main;
