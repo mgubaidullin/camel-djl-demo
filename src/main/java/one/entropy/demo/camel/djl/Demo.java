@@ -14,7 +14,6 @@ public class Demo extends EndpointRouteBuilder {
                         .findFirst().get().getInputStream()
                         .readAllBytes()))
             .to(djl("cv/image_classification").artifactId("ai.djl.mxnet:mlp:0.0.1"))
-//                .to("djl:cv/image_classification?artifactId=ai.djl.mxnet:mlp:0.0.3")
             .marshal().json(true);
     }
 }

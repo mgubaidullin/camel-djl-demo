@@ -1,59 +1,32 @@
-# Image classification service with Camel Deep Java Library 
+# Image classification service with Camel Deep Java Library and Camel Quarkus
 
 This project demonstrates simple HTTP-service to classify images using Zoo Model.
 
 With the aid of Apache Camel it could be implemented in a few lines of code:
 
 ```java
+package one.entropy.demo.camel.djl;
+
 import org.apache.camel.attachment.AttachmentMessage;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
-import org.apache.camel.main.Main;
 
 public class Demo extends EndpointRouteBuilder {
 
-    public static void main(String[] args) throws Exception {
-        Main main = new Main();
-        main.addRouteBuilder(Demo.class);
-        main.run();
-    }
-
     public void configure() throws Exception {
-        from(undertow("http://0.0.0.0:8080/upload"))
-            .process(exchange ->
-                    exchange.getIn()
-                        .setBody(exchange.getIn(AttachmentMessage.class)
-                        .getAttachments().values().stream()
-                        .findFirst().get().getInputStream()
-                        .readAllBytes()))
-            .to(djl("cv/image_classification")
-                    .artifactId("ai.djl.mxnet:mlp:0.0.1"))
-            .marshal().json(true);
+        from(platformHttp("/upload"))
+                .process(exchange ->
+                        exchange.getIn()
+                                .setBody(exchange.getIn(AttachmentMessage.class)
+                                        .getAttachments().values().stream()
+                                        .findFirst().get().getInputStream()
+                                        .readAllBytes()))
+                .to(djl("cv/image_classification").artifactId("ai.djl.mxnet:mlp:0.0.1"))
+                .marshal().json(true);
     }
 }
 ```
 
-## Setup guide
-
-### Install the Java Development Kit
-For ubuntu:
-```
-    sudo apt-get install openjdk-11-jdk-headless
-```
-For centos
-```
-    sudo yum install java-11-openjdk-devel
-```
-For Mac:
-```
-    brew tap homebrew/cask-versions
-    brew update
-    brew cask install adoptopenjdk11
-```
-You can also download and install [Oracle JDK](https://www.oracle.com/technetwork/java/javase/overview/index.html)
-manually if you have trouble with the previous commands.
-
-If you have multiple versions of Java installed, you can use the ```$JAVA_HOME``` environment
-variable to control which version of Java to use.
+## How to
 
 ### Build demo
 ```sh
@@ -62,7 +35,12 @@ variable to control which version of Java to use.
 
 ### Start demo
 ```sh
-    mvn exec:java -Dexec.mainClass="one.entropy.demo.camel.djl.Demo"
+    java -jar target/camel-djl-demo-1.0.0-runner.jar
+```  
+
+### Start in dev mode
+```sh
+   mvn clean quarkus:dev
 ```  
 
 ### Call service demo
