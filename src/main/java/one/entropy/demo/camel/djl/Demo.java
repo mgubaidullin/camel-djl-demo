@@ -8,7 +8,7 @@ public class Demo extends EndpointRouteBuilder {
 
     public static void main(String[] args) throws Exception {
         Main main = new Main();
-        main.addRouteBuilder(Demo.class);
+        main.configure().addRoutesBuilder(Demo.class);
         main.run();
     }
 
@@ -20,8 +20,8 @@ public class Demo extends EndpointRouteBuilder {
                         .getAttachments().values().stream()
                         .findFirst().get().getInputStream()
                         .readAllBytes()))
-            .to(djl("cv/image_classification")
-                    .artifactId("ai.djl.mxnet:mlp:0.0.1"))
+//            .to(djl("cv/image_classification").artifactId("ai.djl.mxnet:mlp:0.0.1"))
+                .to("djl:cv/image_classification?artifactId=ai.djl.mxnet:mlp:0.0.3")
             .marshal().json(true);
     }
 }

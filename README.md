@@ -55,17 +55,6 @@ manually if you have trouble with the previous commands.
 If you have multiple versions of Java installed, you can use the ```$JAVA_HOME``` environment
 variable to control which version of Java to use.
 
-
-### Camel 3.3
-
-Apache Camel supports Deep Java Library starting from v 3.3.
-While Camel 3.3 is not released yet, install it locally outside of this demo project (It might take about 15 minutes):
-```sh
-    git clone git@github.com:apache/camel.git
-    cd camel
-    mvn clean install -Pfastinstall
-```
-
 ### Build demo
 ```sh
     mvn clean package
